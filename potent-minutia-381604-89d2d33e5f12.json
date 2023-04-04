@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "potent-minutia-381604",
+  "private_key_id": "89d2d33e5f121e943c0bab0a4ba43415d18f2042",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC3F4DHOuT/zcQA\nIHAdqHSGUqK1DWNQZOqn7vSrkygyAUADI4iLxyimpZLAaRIDOFZm1X+aahdhHNYJ\n9DmZSJeFKSgCYiWd2rm/iKlIULLS80Jvd5ljSLv5ELk4M2eE91+//w3Y2GTUoDDC\nktAVDogO2S8CA7DeGSOh0ORC+u9Tu+vi0sks5bm/xlqr8iWNZTZevwIYsVuvwEfa\n7mmvopfYIwGeunYQCfek2qBnFYdXlHnFZzxDZ6v1KYXi/yklzG6mIIqWJ7mnHRPH\nIhz0yQ19yIRq5uclN9IqRaCq3TwGHjEoDNv2khy/h/Ay8ExEJm+PE6Kocu4EYf52\nXEMriZYRAgMBAAECggEAAceTs9wJr8bTOeEW1eL2Rvv0ouffaD+i3EEBVc2XXW0P\nrzggMqOb7Iq9c2tSBn/8rwEyPVD8qy/5kJ00Fh5TgrLUtbk4fmFK3ua4JoDKTCyb\nH7Q85G8njJMyCa7OOcehwZ78BniL+lkYQDvnE91RSzunLlDU3kPGSeNa5J/Fxb2Q\npvGpvkckee/vueJy008j7HYpzVzuPt1uotdoIHphyjRGFZX/uJD9szd513pbK7M4\nu7hQihx4q32kxR8/6cegkOGEdLoRIAp+UL6Wif/VfKlpnMC/gSExE7uBsbYxM14I\nyaG2k80oa/VJuiqy+kF+MvswtM8C/6mn/MldeaaUQQKBgQDZ9upmr7yu/n4eIVqn\n4Xqci5Vh5SReG8181yy0643gIpD11Qa+lntyJtV2tf4sB8XllVnkxPp23jz/29xP\n+tE2o6Ttrwdlj2vfW73s4Rd+ybFuQlN/K9vGPwEtegd2LTXpIEy3Z5EOpPmRkO1d\nKcTEA920UBwJ7enpgNU4cEQB+QKBgQDXCrnkUjRkvrR6gOBZMo+uex12mIfsYQnm\nonvKg5M0DsNcn3iENVorYwXxclFegRS7/2epTpkZxtKyuywT1MLQ7FiDfGq8ifsC\nFqH2xfroH9XfCK6hfhp011cqw5F84aeEC5FwtbD9lHGPett9yjew+sci/gdlOSt2\ncFy9KV262QKBgQCuUrOwAvd2QeYeNPDregN1NpH35KsMdVIIeZOw8v/aderYIlMt\nlO8QIgzxz6aEEodtEeD+fagP77h7rZzrfp9bAtCCpEzXJjjRP++Lh48iAS/eDj/3\nYt14FaXceE+Fba1DUWjp+nPicYGEsZOVwjUzzB/B+ZwjONuuvDJL3EYYCQKBgBTD\nfF+HcHep0lNhzkfOkgEO8jFZWQaB+CrE1Z8gRT5pjoOLAmABpss5rIE7wI+XdyEP\n8Dpw1Gegwwdu+zqO+KCjsYhAoy3BRPNWrBzf0PJI4KXAeNwvCO7vPANtDsc4Iqyl\nUU3IvWY+xxhLjJYAyI/WJxRB4wTrGD8/ajT5oYtBAoGAI1dm2JXlfOUOlCevcDRi\nzle8ULRScjtdCSxwfFDM6iWhN/YjqW+SVlrNRqamZvGqlRLpwr1T4oOkH6VyUuD8\nbvqoDIOGn4PkUwTtxIKCPckxdBdFjbLXh4qaZUHpZjnI5TBx1KqygXjiu8rabNT1\nVGil0Jm9Zk/q2wH0HUJyaV0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "vcbgpt@potent-minutia-381604.iam.gserviceaccount.com",
+  "client_id": "104674756822245313205",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vcbgpt%40potent-minutia-381604.iam.gserviceaccount.com"
+}
