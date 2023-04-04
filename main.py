@@ -51,6 +51,13 @@ openai.api_key = "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"
 # sample=db.get_sample(table[0][0])
 # print(sample)
 #
+
+def text_to_speech(msg):
+    output = gTTS(msg,lang="vi", slow=False)
+    output.save("coutput.mp3")
+    playsound.playsound('coutput.mp3', True)
+    os.remove("coutput.mp3")
+
 class AppChatGPT:
 
     def __init__(self) -> None:
@@ -121,20 +128,16 @@ class AppChatGPT:
         res = "Chat GPT in progress...."
         time.sleep(1)
         self.lbl.configure(text=res)
-        question =  self.txtQuestion.get("1.0", "end-1c")
+        question = self.txtQuestion.get("1.0", "end-1c")
         msg = self.chatbot(question)
 
         self.txtAnswer.insert(END,"\n"+ "\n >> "+ msg)
-        
-
         res = "Chat GPT 3.5"
         self.lbl.configure(text=res)
         self.btn = Button( self.root, text="Answer", fg="red", command=self.clicked)
         self.btn.grid(column=2, row=6)
-        # output = gTTS(msg,lang="vi", slow=False)
-        # output.save("coutput.mp3")
-        # playsound.playsound('coutput.mp3', True)
-        # os.remove("coutput.mp3")
+        threading.Thread(target=text_to_speech, args=(msg,)).start()
+
     def clearQ(self):
         self.txtQuestion.delete(1.0,END)
 
