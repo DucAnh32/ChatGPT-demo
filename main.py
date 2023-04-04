@@ -15,22 +15,10 @@ import os
 import textract
 import json
 
-import urllib.request as urllib2
-from pydub import AudioSegment
-from pydub.playback import play
-# from database_connector import database
-
-
-
-
+from database_connector import *
 from gtts import gTTS
 import playsound
-from pydub import AudioSegment
-from pydub.playback import play
-# import vlc
-from IPython.display import Audio
 
-import requests
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'potent-minutia-381604-89d2d33e5f12.json'
 FORMAT = pyaudio.paInt16
@@ -46,11 +34,7 @@ max_file = 100
 BUF_MAX_SIZE = CHUNK_SIZE * 10
 
 openai.api_key = "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"
-# db= database()
-# table=db.get_table()
-# sample=db.get_sample(table[0][0])
-# print(sample)
-#
+
 
 def text_to_speech(msg):
     output = gTTS(msg,lang="vi", slow=False)
@@ -70,7 +54,7 @@ class AppChatGPT:
         self.root.geometry('1400x900')
         # self.root.minsize(width=screenWidth, height=screenHeight)
         self.root.state('zoomed')
-
+        self.db = database()
         self.lbl = Label(self.root, text="Question?")
         self.lbl.grid(column=1,row=0)
 
@@ -86,9 +70,6 @@ class AppChatGPT:
         self.txtAnswer.grid(column=4, row=5, rowspan=3)
         self.txtQuestion=Text(self.root,width=40,font=('Times New Roman', 17))
         self.txtQuestion.grid(column=1, row=5, rowspan=3)
-
-        self.click_load_db=False
-
         self.btnClrQ = Button(self.root, text="Clear Q", fg="black", command=self.clearQ)
         # Set Button Grid
         self.btnClrQ.grid(column=1, row=8)
@@ -108,21 +89,17 @@ class AppChatGPT:
         self.mic_btn = Button(self.root, image=self.mic_icon_tk,command=self.click_recording) 
         self.mic_btn.grid(column=2, row=1)
 
-
-
         self.messages = [
         {"role": "system", "content": "You are a helpful and kind AI Assistant."},
         ]
-
         # add button to load file
         self.btnLoadFile = Button(self.root, text="Load file", fg="blue", command=self.loadDocFile)
         # Set Button Grid
         self.btnLoadFile.grid(column=0, row=2)
-
-        # #add button to load file
-        # self.btnLoadDataBase = Button(self.root, text="Load database", fg="blue", command=self.click_load_db)
-        # # Set Button Grid
-        # self.btnLoadDataBase.grid(column=0, row=3)
+        # add button to load file
+        self.btnLoadDataBase = Button(self.root, text="Load database", fg="blue", command=self.click_load_db)
+        # Set Button Grid
+        self.btnLoadDataBase.grid(column=0, row=3)
         self.root.mainloop()
     def clicked(self):
         res = "Chat GPT in progress...."
@@ -137,6 +114,7 @@ class AppChatGPT:
         self.btn = Button( self.root, text="Answer", fg="red", command=self.clicked)
         self.btn.grid(column=2, row=6)
         threading.Thread(target=text_to_speech, args=(msg,)).start()
+        threading.Thread(target=self.execute_sql, args=(msg,)).start()
 
     def clearQ(self):
         self.txtQuestion.delete(1.0,END)
@@ -159,7 +137,7 @@ class AppChatGPT:
         file_path = filedialog.askopenfilename()
         # Read the file
         extension = os.path.splitext(file_path)[1]
-        print(extension)
+        # print(extension)
         if extension == '.pdf':
             self.txtQuestion.delete(1.0, END)
             self.readPDF(file_path)
@@ -188,21 +166,28 @@ class AppChatGPT:
             for i in range(numPages):
                 print(pdfReader.pages[0].extract_text())
                 self.txtQuestion.insert(END, pdfReader.pages[i].extract_text())
-    
-    # def load_schema(self):
 
-    #     return
-    
-    # def click_load_db(self):
+    def click_load_db(self):
 
-    #     self.txtQuestion.delete(1.0,END)
-    #     self.txtQuestion.insert(END,"cusomers database has been loaded. Beside are 5 sample rows")
-    #     self.txtAnswer.insert(END,sample)
-    #     msg=self.chatbot(input=sample)
-    #     print(msg)
+        sample=self.db.get_sample()
+        self.txtQuestion.delete(1.0,END)
+        self.txtQuestion.insert(END,"cusomers database has been loaded. Beside are 5 sample rows")
+        self.txtAnswer.insert(END,sample)
+        msg=self.chatbot(input=sample)
+        print(msg)
+        self.txtAnswer.insert(END, msg)
 
-    # def load_db():
-    #     return
+    def execute_sql(self,msg):
+        sql = get_sql_from_msg(msg)
+        print(sql)
+        # try:
+        sql_response = self.db.execute_sql(sql)
+        self.txtAnswer.insert(END, '\n')
+        self.txtAnswer.insert(END, sql_response_analyze(sql,sql_response))
+        # except:
+        #     print('sql syntax error')
+
+
     
     def click_recording(self):
         if self.recording:
