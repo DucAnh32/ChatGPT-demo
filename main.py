@@ -169,11 +169,13 @@ class AppChatGPT:
 
     def click_load_db(self):
 
-        sample=self.db.get_sample()
+        schema=self.db.get_schema()
+        sample = self.db.get_sample()
         self.txtQuestion.delete(1.0,END)
-        self.txtQuestion.insert(END,"cusomers database has been loaded. Beside are 5 sample rows")
+        self.txtQuestion.insert(END,"cusomers database has been loaded")
         self.txtAnswer.insert(END,sample)
-        msg=self.chatbot(input=sample)
+        input_string=schema + '\n' + sample
+        msg=self.chatbot(input=input_string)
         print(msg)
         self.txtAnswer.insert(END, msg)
 
@@ -184,6 +186,7 @@ class AppChatGPT:
         sql_response = self.db.execute_sql(sql)
         self.txtAnswer.insert(END, '\n')
         self.txtAnswer.insert(END, sql_response_analyze(sql,sql_response))
+        self.chatbot(str(sql_response))
         # except:
         #     print('sql syntax error')
 

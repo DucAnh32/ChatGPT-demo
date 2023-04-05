@@ -8,6 +8,23 @@ def get_sql_from_msg(msg):
     sql = sql[idx:]
     return sql
 
+def get_list_idx(s,c):
+    idxs = [pos for pos, char in enumerate(s) if char == c]
+    return idxs
+def clean_sql(s):
+    idxs=[pos for pos, char in enumerate(s) if char == ',']
+    for idx in idxs:
+        open_bra_before=get_list_idx(s[0:idx],'(')
+        close_bra_before = get_list_idx(s[0:idx], ')')
+        open_bra_after = get_list_idx(s[idx:], '(')
+        close_bra_after = get_list_idx(s[idx:], ')')
+        subtract_before=abs(len(open_bra_before)-len(close_bra_before))
+        subtract_after=abs(len(open_bra_after) - len(close_bra_after))
+        if subtract_before==0:
+            continue
+        elif subtract_after==subtract_before:
+            s=s[:idx] + s[idx+1:]
+    return s
 def get_alias_or_not(res):
     if ' as ' in res.lower():
         index=res.lower().find(' as ')
@@ -16,7 +33,7 @@ def get_alias_or_not(res):
 
 def sql_response_analyze(sql,sql_response):
     index2 = sql.rfind('FROM')
-    list_col = (sql[7:index2].split(', '))
+    list_col = clean_sql(sql[7:index2]).split(', ')
     headers = []
     for col in list_col:
         headers.append(get_alias_or_not(col))
@@ -69,7 +86,17 @@ class database():
         myresult = self.mycursor.fetchall()
         return myresult
 
+    def get_schema(self):
+        output_string = ''
+        for table in self.get_table():
+            sql='DESCRIBE {}'.format(table)
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            output_string += "Here is schema of table {table}: \n {schema} \n ".format(table=table,schema=myresult)
+        return output_string
+
 if __name__=="__main__":
     db=database()
-    print(db.execute_sql('SELECT FLOOR(Age/10)*10 AS age_group, COUNT(*) AS number_of_customers FROM data_sample GROUP BY age_group;'))
+    print(db.get_schema())
+
 
